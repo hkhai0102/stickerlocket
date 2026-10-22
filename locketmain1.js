@@ -5,7 +5,7 @@
 var ua = $request.headers["User-Agent"] || $request.headers["user-agent"],
     obj = JSON.parse($response.body);
 
-obj.Attention = "Chúc mừng bạn! Vui lòng không sử dụng chúng dưới mục đích thương mại!";
+obj.Attention = "Chúc mừng bạn! Dịch vụ của EM NEXUS!";
 
 var FAR_FUTURE = "9999-01-09T10:10:14Z";
 var PAST = "2018-01-09T10:10:14Z";
