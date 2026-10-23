@@ -57,7 +57,7 @@ obj.subscriber.entitlements["Gold"] = makeEnt(goldProduct);
 //obj.subscriber.subscriptions[pack10Product] = makeSub(pack10Product, 0.0, "USD");
 //obj.subscriber.entitlements["effect_pack_10"] = makeEnt(pack10Product);
 var pack20Product = "com.locket.Locket.FilterPack_20Photos_500";
-obj.subscriber.subscriptions[pack20Product] = makeSub(pack20Product, 5.0, "USD");
+obj.subscriber.subscriptions[pack20Product] = makeSub(pack20Product, 0.0, "USD");
 obj.subscriber.entitlements["effect_pack_20"] = makeEnt(pack20Product);
 
 $done({
