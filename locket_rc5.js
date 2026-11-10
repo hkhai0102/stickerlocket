@@ -5981,7 +5981,7 @@ Object.assign(obj.entries, {
                                 }
                         },
                         {
-                                "overlay_id": "caption:Em EmXú",
+                                "overlay_id": "caption:Em NeXú",
                                 "source": "remote",
                                 "caption": {
                                         "background": {
@@ -5992,7 +5992,7 @@ Object.assign(obj.entries, {
                                                 ]
                                         },
                                         "max_lines": 1,
-                                        "text": "💻 MinhHiep08",
+                                        "text": "💻 Em NeXú",
                                         "text_color": "#183153",
                                         "type": "static_content"
                                 }
