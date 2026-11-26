@@ -4075,49 +4075,6 @@ Object.assign(obj.entries, {
         }
 ])
 });
-    // ============================================================
-// 9. HÀM VẢ CỰC MẠNH (FORCE OVERRIDE ĐÈ TẤT CẢ GIÁ TRỊ VỀ GOLD & 45S)
-// ============================================================
-function hamVaForceOverride(entries) {
-    if (!entries || typeof entries !== "object") return;
-    
-    // 1. Vả thời lượng 45 giây vào mọi key video/duration
-    var durationKeys = [
-        "max_video_duration", "video_max_duration", "camera_roll_max_duration",
-        "camera_roll_video_max_duration", "camera_roll_duration",
-        "video_trim_max_duration", "trim_max_duration", "gold_max_duration", "goldMaxDuration"
-    ];
-    for (var i = 0; i < durationKeys.length; i++) {
-        entries[durationKeys[i]] = "60.0";
-    }
-
-    // 2. Vả cờ Gold & Miễn phí toàn bộ bộ lọc
-    entries["is_gold"] = "true";
-    entries["has_gold"] = "true";
-    entries["is_gold_user"] = "true";
-    entries["user_is_gold"] = "true";
-    entries["gold_user"] = "true";
-    entries["gold_active"] = "true";
-    entries["all_filters_free"] = "true";
-    entries["unlocked_filters"] = "true";
-    entries["free_filters_enabled"] = "true";
-    entries["filter_selection_enabled"] = "true";
-    entries["require_gold_for_filters"] = "false";
-    entries["requires_gold_for_filters"] = "false";
-    entries["camera_filter_gold_only"] = "false";
-    entries["camera_filters_gold_only"] = "false";
-    entries["filter_gold_only"] = "false";
-    entries["filters_gold_only"] = "false";
-    entries["ai_filter_gold_only"] = "false";
-    entries["ai_filters_gold_only"] = "false";
-    entries["filter_paywall_enabled"] = "false";
-    entries["camera_filter_paywall_enabled"] = "false";
-    entries["filter_upsell_enabled"] = "false";
-
-    // 3. Vả đè vô hiệu hóa cache cũ của iOS
-    entries["cache_ttl_seconds"] = "0";
-    entries["client_cache_ttl_sec"] = "0";
-}
 hamVaForceOverride(obj.entries);
 
 $done({
