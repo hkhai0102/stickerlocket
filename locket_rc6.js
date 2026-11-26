@@ -725,129 +725,54 @@ if (ua.includes("Locket")) {
         moment_upload_queue_persistence_v2: "1",
     });
 
+   // ============================================================
+    // 6. WIDGET, THÔNG BÁO & GIAO DIỆN (JOURNAL / PROFILE)
     // ============================================================
-// ============================================================
-// 6. WIDGET SỰ KIỆN MỚI, KHUNG HOÀNG GIA & BẬT ĐỊA CHỈ + FOCUS
-// ============================================================
-var dailyFrames = {
-        1: { name: "mon", uid: "frame_mon_galaxy_cat", url: "https://i.ibb.co/84j69JnV/frame-mon-640.png" },
-        2: { name: "tue", uid: "frame_tue_mecha_dragon", url: "https://i.ibb.co/fVQvW41Z/frame-tue-640.png" },
-        3: { name: "wed", uid: "frame_wed_bamboo_rabbit_v2", url: "https://i.ibb.co/Lzv9bQbJ/frame-wed-640.png" },
-        4: { name: "thu", uid: "frame_thu_baby_bear_v2", url: "https://i.ibb.co/8wWQF1R/frame-thu-640.png" },
-        5: { name: "fri", uid: "frame_fri_astro_boy", url: "https://i.ibb.co/VYmyDN1g/frame-fri-640.png" },
-        6: { name: "sat", uid: "frame_sat_cyber_cat", url: "https://i.ibb.co/wFdwxy9w/frame-sat-640.png" },
-        0: { name: "sun", uid: "frame_sun_robot_gamer", url: "https://i.ibb.co/d4vFGDw2/frame-sun-640.png" }
-    };
-
-    // Tính chuẩn múi giờ Việt Nam (UTC+7) kể cả trong tiến trình VPN ngầm của iOS
-    var nowUtc = new Date();
-    var vnTime = new Date(nowUtc.getTime() + (7 * 60 * 60 * 1000));
-    var currentDay = vnTime.getUTCDay(); // 0 = CN, 1 = T2, ..., 6 = T7
-    var todayFrame = dailyFrames[currentDay] || dailyFrames[1];
-    var dayUid = todayFrame.uid + "_" + vnTime.getUTCFullYear() + "_" + (vnTime.getUTCMonth() + 1) + "_" + vnTime.getUTCDate();
-
-// 6. WIDGET SỰ KIỆN MỚI, KHUNG HOÀNG GIA & BẬT ĐỊA CHỈ + FOCUS
-// ============================================================
-Object.assign(obj.entries, {
-    widget_frame_event_max_images: "10",
-    android_widget_frame_event_enabled: "true",
-    widget_badge_enabled: "true",
-    widget_badge_v2: "true",
-    widget_stale_state_enabled: "false",
-    widget_last_sent_indicator: "false",
-    widget_sync_token_reload_mode: "clearTokenNever",
-
-    widget_frame_event: JSON.stringify({
-        uid: "custom_frame_event_2026",
-        url: "https://i.ibb.co/7dXZMyBg/1.png",
-        use_local_time_zone: true,
-        placement: "below",
-        start_at: "2020-01-01T00:00:00",
-        end_at: "2099-12-31T23:59:59"
-    }),
-
-    custom_widget_frames: "enabled",
-    custom_widget_frames_enabled: "true",
-
-    widget_frames_config: JSON.stringify({
-        enabled: true,
-        allow_custom_frames: true,
-        unlock_all_styles: true,
-        default_style: "royal_gold_vip",
-        styles: [
-            {
-                id: "royal_gold_vip",
-                name: "👑 VIP Royal Gold",
-                border_style: "ornate_gold",
-                crown_badge: true,
-                badge_text: "VIP",
-                corner_radius: 28.0,
-                glow_effect: true,
-                glow_color: "#FFD700",
-                overlay_asset: "royal_crown_frame"
-            },
-            {
-                id: "verified_blue_vip",
-                name: "💎 Tích Xanh Verified VIP",
-                border_style: "ornate_gold",
-                crown_badge: true,
-                badge_text: "VERIFIED",
-                corner_radius: 28.0,
-                glow_effect: true,
-                glow_color: "#1D9BF0",
-                overlay_asset: "https://locket-vip.mhiep20077.workers.dev/assets/verified_badge.png"
-            }
-        ]
-    }),
-
-    widget_frame_styles: JSON.stringify([
-        "royal_gold_vip",
-        "verified_blue_vip",
-        "gold_luxury",
-        "classic"
-    ]),
-
-    seasonal_frames_config: JSON.stringify({
-        enabled: true,
-        auto_rotate: false,
-        override_default: true,
-        current_season_theme: "royal_gold_vip"
-    }),
-
-    live_activity_onboarding: "true",
-    live_activity_onboarding_variant: "friending",
-    register_live_activity_push_to_start_token: "true",
-    live_activity_remove_stale_start_token: "true",
-    notification_preferences_live_activities: "true",
-    notification_preferences: "true",
-    notification_reply_body_visible: "true",
-    prompt_notification_permissions_after_friending: "true",
-    activity_bar_enabled: "true",
-    journal_activity_bar_enabled: "true",
-
-    // BẬT ĐỊA CHỈ (location: true) VÀ FOCUS NỘI DUNG ẢNH (focus_animation: true)
-    journal_settings: JSON.stringify({
-        debug_menu_enabled: false,
-        focus_animation: true,
-        compact_header: true,
-        friends_button: true,
-        reverse_scroll_direction: false,
-        streak_visualization: true,
-        streak_visualization_style: "gradient",
-        streak_header_minimum_count: 0,
-        streak_visualization_minimum_count: 1,
-        overlay_indicators: {
-            location: true,
-            music: true,
-            static_content: true,
-            weather: true
-        }
-    }),
-
-    qr_code_config: JSON.stringify({ profile_enabled: true, scanning_enabled: true }),
-    custom_profile_pics: "true",
-    profile_menu_v2_enabled: "true"
-});
+    Object.assign(obj.entries, {
+        widget_frame_event_max_images: "5",
+        android_widget_frame_event_enabled: "true",
+        widget_badge_enabled: "true",
+        widget_badge_v2: "true",
+        widget_stale_state_enabled: "false",
+        widget_last_sent_indicator: "false",
+        widget_sync_token_reload_mode: "clearTokenNever",
+        widget_frame_event: JSON.stringify({
+            uid: "midautumn_2026",
+            // url: "https://i.ibb.co/vC8b93Ld/ig.png",
+            url: "https://i.ibb.co/1Yt1Dzzy/Shin-chan-1.png",
+            // url: "https://i.ibb.co/RTm5P1n9/kitty-1.png",
+            // url: "https://i.ibb.co/JjLZ3cvD/khung-ins.png",
+            use_local_time_zone: true,
+            placement: "below",
+            start_at: "2020-01-01T00:00:00",
+            end_at: "2099-12-31T23:59:59"
+        }),
+        live_activity_onboarding: "true",
+        live_activity_onboarding_variant: "friending",
+        register_live_activity_push_to_start_token: "true",
+        live_activity_remove_stale_start_token: "true",
+        notification_preferences_live_activities: "true",
+        notification_preferences: "true",
+        notification_reply_body_visible: "true",
+        prompt_notification_permissions_after_friending: "true",
+        activity_bar_enabled: "true",
+        journal_activity_bar_enabled: "true",
+        journal_settings: JSON.stringify({
+            debug_menu_enabled: false,
+            focus_animation: false,
+            compact_header: true,
+            friends_button: false,
+            reverse_scroll_direction: false,
+            streak_visualization: true,
+            streak_visualization_style: "gradient",
+            streak_header_minimum_count: 0,
+            streak_visualization_minimum_count: 2,
+            overlay_indicators: { location: false, music: true, static_content: true, weather: true }
+        }),
+        qr_code_config: JSON.stringify({ profile_enabled: true, scanning_enabled: true }),
+        custom_profile_pics: "true",
+        profile_menu_v2_enabled: "true"
+    });
 
     // ============================================================
     // 7. HỆ THỐNG, CACHE & STORAGE CDN
