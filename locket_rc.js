@@ -122,7 +122,7 @@ Object.assign(obj.entries, {
         feature_discovery_popup_config: JSON.stringify({
             tag: "UNLOCKED",
             tag_gradient: true,
-            tag_style: "gold_gradient",
+            //tag_style: "gold_gradient",
             title: "Locket Gold",
             feature_set: [
                 {
