@@ -402,11 +402,11 @@ if (ua.includes("Locket")) {
             quality_mbps: 0.6,
         }),
         camera_roll: JSON.stringify({
-            gold_max_duration: 30.0,
-            video_max_duration: 30.0,
-            max_duration: 30.0,
-            trim_max_duration: 30.0,
-            camera_roll_max_duration: 30.0,
+            gold_max_duration: 60.0,
+            video_max_duration: 60.0,
+            max_duration: 60.0,
+            trim_max_duration: 60.0,
+            camera_roll_max_duration: 60.0,
             quality_mbps: 0.6,
             flash_button: true
         }),
