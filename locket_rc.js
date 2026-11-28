@@ -6,78 +6,205 @@
 // Vui lòng khi chia sẽ hoặc lấy về, làm ơn để nguồn giúp mình. Mình cảm ơn
 // ============================================================
 
-var ua = $request.headers["User-Agent"] || $request.headers["user-agent"] || "";
-var obj = JSON.parse($response.body);
+var ua = (typeof $request !== "undefined" && $request && $request.headers) ? ($request.headers["User-Agent"] || $request.headers["user-agent"] || "") : "";
+var obj = {};
+try {
+    obj = JSON.parse($response.body);
+} catch (e) {
+    obj = {};
+}
 
-if (ua.includes("Locket")) {
-    obj.Attention = "Chúc mừng bạn! Vui lòng không sử dụng chúng dưới mục đích thương mại!";
-    obj.entries = obj.entries || {};
+if (!obj || typeof obj !== "object") {
+    obj = {};
+}
+// Ép trạng thái cập nhật và phiên bản mới nhất theo thời gian thực để vô hiệu hóa cache cũ của iOS
+obj.state = "UPDATE";
+obj.templateVersion = String(Date.now());
 
-   // ============================================================
-    // 1. CẤU HÌNH GOLD, FEATURE GATES & PAYWALL
-    // ============================================================
-    Object.assign(obj.entries, {
-        feature_gates: JSON.stringify({
-            app_icon_picker: "enabled",
-            camera_roll: "enabled",
-            camera_theme: "enabled",
-            locket_views: "enabled",
-            long_captions: "enabled",
-            longer_video: "enabled",
-            unlimited_friends: "enabled",
-            priority_support: "enabled",
-            profile_badge: "enabled",
-            remove_ads: "enabled",
-            video: "enabled",
-            custom_widget_frames: "enabled",
-            streak_recovery: "enabled",
-            stickers: "enabled",
-            custom_stickers: "enabled",
-            photo_stickers: "enabled"
-        }),
-        upsell_features: JSON.stringify({
-            app_icon_picker: true,
-            camera_roll: true,
-            camera_theme: true,
-            locket_views: true,
-            remove_ads: true,
-            custom_widget_frames: true,
-            stickers: true,
-            custom_stickers: true
-        }),
-        paywall_presentation_config: JSON.stringify({
-            uid: "paywall_testflight",
-            onboarding: false,
-            after_sent_moment: false,
-            on_foreground: false,
-            interval: 2592000,
-            profile_banner: true
-        }),
-        feature_discovery_popup_config: JSON.stringify({
-            tag: "UNLOCKED",
-            tag_gradient: true,
-            //tag_style: "gold_gradient",
-            title: "Locket Gold",
-            feature_set: [
-                {
-                    title: "Đã lên Gold! ✨",
-                    body: "Nhớ follow kênh tiktok @hkhai0102 ✨",
+obj.Attention = "Chúc mừng bạn! Vui lòng không bán hoặc chia sẻ cho người khác!";
+obj.entries = obj.entries || {};
+obj.entries.cache_ttl_seconds = "0";
+obj.entries.client_cache_ttl_sec = "0";
+
+// ============================================================
+// ============================================================
+// 1. CẤU HÌNH GOLD, FEATURE GATES & PAYWALL
+// ============================================================
+Object.assign(obj.entries, {
+    feature_gates: JSON.stringify({
+        app_icon_picker: "enabled",
+        camera_roll: "enabled",
+        camera_roll_video: "enabled",
+        camera_roll_video_30s: "enabled",
+        camera_roll_video_upload: "enabled",
+        camera_roll_video_upload_30s: "enabled",
+        camera_roll_longer_video: "enabled",
+        camera_roll_longer_video_30s: "enabled",
+        camera_theme: "enabled",
+        locket_views: "enabled",
+        long_captions: "enabled",
+        longer_video: "enabled",
+        longer_video_30s: "enabled",
+        extended_video_30s: "enabled",
+        photo_library_video: "enabled",
+        photo_library_video_30s: "enabled",
+        gallery_video: "enabled",
+        gallery_video_30s: "enabled",
+        can_upload_30s_video: "enabled",
+        can_record_30s_video: "enabled",
+        allow_longer_video_upload: "enabled",
+        longer_video_upload: "enabled",
+        unlimited_friends: "enabled",
+        priority_support: "enabled",
+        profile_badge: "enabled",
+        profileBadge: "enabled",
+        gold_since_badge: "enabled",
+        goldSinceBadge: "enabled",
+        gold_badge_profile_menu: "enabled",
+        remove_ads: "enabled",
+        video: "enabled",
+        video_15s: "enabled",
+        video_30s: "enabled",
+        video_40s: "enabled",
+        video_60s: "enabled",
+        video_upload: "enabled",
+        video_upload_30s: "enabled",
+        custom_widget_frames: "enabled",
+        streak_recovery: "enabled",
+        streakRecovery: "enabled",
+        streaks: "enabled",
+        streak: "enabled",
+        streak_visualizations: "enabled",
+        streak_badge: "enabled",
+        groups: "enabled",
+        private_mode: "enabled",
+        viewer_mode: "enabled",
+        close_friends: "enabled",
+        camera_filter_sheet: "enabled",
+        camera_filters: "enabled",
+        camera_filter: "enabled",
+        filter: "enabled",
+        filters: "enabled",
+        photo_filters: "enabled",
+        ai_filters: "enabled",
+        holiday_effects: "enabled",
+        holiday_filters: "enabled",
+        holiday_filter: "enabled",
+        ar_filters: "enabled",
+        face_filters: "enabled",
+        profile_cover: "enabled",
+        profile_cover_photo: "enabled",
+        profile_customization: "enabled"
+    }),
+    upsell_features: JSON.stringify({
+        app_icon_picker: false,
+        camera_roll: false,
+        camera_theme: false,
+        locket_views: false,
+        remove_ads: false,
+        custom_widget_frames: false,
+        filter: false,
+        filters: false,
+        camera_filter: false,
+        camera_filters: false,
+        holiday_filter: false,
+        holiday_filters: false,
+        holiday_effects: false,
+        ai_filter: false,
+        ai_filters: false
+    }),
+    paywall_presentation_config: JSON.stringify({
+        uid: "paywall_testflight",
+        onboarding: false,
+        after_sent_moment: false,
+        after_moment: false,
+        after_capture: false,
+        on_foreground: false,
+        holiday_effects: false,
+        camera_filters: false,
+        camera_filter: false,
+        filters: false,
+        filter: false,
+        ai_filter: false,
+        ai_filters: false,
+        filtered_image: false,
+        filtered_images: false,
+        generate_filtered_image: false,
+        interval: 2592000,
+        profile_banner: true
+    }),
+    feature_discovery_popup_config: JSON.stringify({
+        tag: "LOCKET GOLD NMS",
+        tag_gradient: true,
+        tag_style: "gold_gradient",
+        title: "Đã Kich Hoạt 💛",
+        feature_set: [
+            {
+                title: "Nhớ follow kênh tiktok @hkhai0102 ✨",
+                    body: "Một follow của bạn, một niềm vui của mình 💛",
                     imageURL: "https://cdn.upanhlaylink.com/i/GSfYXmKd.png"
-                }
-            ],
-            primary_button_title: "Xong rồi nhé!",
-            campaign: "locket_gold",
-            start_at: "2020-01-01T00:00:00",
-            end_at: "2099-12-31T23:59:59",
-            use_local_time_zone: true
-        }),
-        android_subscribe_gold_button_enabled: "false",
-        profile_badge_visible: "true",
-        lunar_new_year_app_icon_enabled: "true",
-        settings_instagram_url: "https://www.instagram.com/hkhai0102/",
-        settings_tiktok_url: "https://tiktok.com/@hkhai0102",
-        star_sign_caption_image_url: "https://storage.googleapis.com/locket-public/overlays/star_signs",
-    });
+            }
+        ],
+        primary_button_title: "Xong",
+        campaign: "locket_gold_welcome_v3",
+        start_at: "2020-01-01T00:00:00",
+        end_at: "2099-12-31T23:59:59",
+        use_local_time_zone: true
+    }),
+    android_subscribe_gold_button_enabled: "false",
+    profile_badge_visible: "true",
+    lunar_new_year_app_icon_enabled: "true",
+  
+
+    // BỘ CỜ MỞ KHÓA BỘ LỌC GOLD & TOÀN DIỆN
+    country_code: "US",
+    region_code: "US",
+    is_us_user: "true",
+    camera_filters_enabled: "true",
+    camera_filter_enabled: "true",
+    holiday_filters_enabled: "true",
+    ai_filters_enabled: "true",
+    camera_filter_gold_only: "false",
+    camera_filters_gold_only: "false",
+    holiday_filters_gold_only: "false",
+    filter_gold_only: "false",
+    filters_gold_only: "false",
+    ai_filter_gold_only: "false",
+    ai_filters_gold_only: "false",
+    filter_paywall_enabled: "false",
+    camera_filter_paywall_enabled: "false",
+    filter_upsell_enabled: "false",
+    require_gold_for_filters: "false",
+    require_gold_for_filter: "false",
+    requires_gold_for_filters: "false",
+    requires_gold_for_filter: "false",
+    requires_gold_for_camera_filters: "false",
+    camera_filter_requires_gold: "false",
+    camera_filters_require_gold: "false",
+    ai_filter_requires_gold: "false",
+    ai_filters_require_gold: "false",
+    filter_requires_gold: "false",
+    filters_require_gold: "false",
+    filtered_image_requires_gold: "false",
+    filtered_images_require_gold: "false",
+    filtered_image_gold_only: "false",
+    filtered_images_gold_only: "false",
+    free_filters_enabled: "true",
+    filter_selection_enabled: "true",
+    camera_filter_sheet_selection_enabled: "true",
+    sheet_filters_selectable: "true",
+    dismiss_filter_sheet_on_select: "true",
+    is_gold: "true",
+    has_gold: "true",
+    is_gold_user: "true",
+    user_is_gold: "true",
+    gold_user: "true",
+    gold_active: "true",
+    all_filters_free: "true",
+    unlocked_filters: "true",
+    camera_filter_max_count: "50",
+    max_camera_filters: "50"
+});
     // ============================================================
     // 2. CHẶN QUẢNG CÁO & TẮT TRACKING (SENTRY)
     // ============================================================
